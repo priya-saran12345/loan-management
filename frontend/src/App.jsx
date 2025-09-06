@@ -15,12 +15,10 @@ import { Toaster } from 'react-hot-toast';
 import DashboardLayout from './pages/dashboard/DashboardLayout';
 import DashboardHome from './pages/dashboard/DashboardHome';
 import ProfilePage from './pages/dashboard/ProfilePage';
-
 // Employee
 import AddEmployee from './pages/dashboard/AddEmployee';
 import EmployeeList from './pages/dashboard/EmployeeList';
 import ExpenseTracker from './pages/dashboard/ExpenseTracker';
-
 // Customer STL
 import AddCustomer from './pages/dashboard/AddCustomer';
 import CustomerList from './pages/dashboard/CustomerList';
@@ -63,7 +61,6 @@ const App = () => {
           <Route path='/contact' element={<Contact />} />
           <Route path='/privacy' element={<PrivacyPolicy />} />
           <Route path='/term' element={<TermsOfService />} />
-
           <Route path='/dashboard' element={<DashboardLayout />}>
             <Route index element={<DashboardHome />} />
             <Route path='profile' element={<ProfilePage />} />
