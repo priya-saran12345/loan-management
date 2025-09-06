@@ -1,22 +1,19 @@
-// api/index.js
 import app, { ensureDB } from "../backend/app.js";
+import serverless from "serverless-http";
 
-let dbReady; // cached promise
+let ready;
+const handler = serverless(app); // express → (req,res) handler
 
-export default async function handler(req, res) {
+export default async function vercelHandler(req, res) {
   try {
-    if (!dbReady) dbReady = ensureDB(); // start once, reuse next calls
-    await dbReady;                       // await safely inside handler
-    return app(req, res);                // express-as-handler
+    if (!ready) ready = ensureDB(); // single lazy init
+    await ready;
+    return handler(req, res);
   } catch (err) {
     console.error("🔥 Startup/req error:", err);
     const isPreview = process.env.VERCEL_ENV !== "production";
     res.status(500).json({
-      error: {
-        code: 500,
-        message: "Startup failed",
-        ...(isPreview ? { detail: String(err?.stack || err) } : {}),
-      },
+      error: { code: 500, message: "Startup failed", ...(isPreview ? { detail: String(err?.stack || err) } : {}) },
     });
   }
 }

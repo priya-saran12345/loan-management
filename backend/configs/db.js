@@ -1,12 +1,20 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
+  mongoose.connection.on("connected", () => console.log("Database Connected"));
   try {
-    mongoose.connection.on("connected", () => console.log("Database Connected"));
-    await mongoose.connect(`${process.env.MONGODB_URI}/loan`);
+    // If your MONGODB_URI already contains a db name, DON'T append "/loan"
+    const uri = process.env.MONGODB_URI;
+    await mongoose.connect(uri.includes("/") ? uri : `${uri}/loan`, {
+      // optional: recommended in serverless
+      // bufferCommands: false,
+      // maxPoolSize: 5,
+    });
+    return mongoose;
   } catch (error) {
-    console.error(error.message);
-    process.exit(1);
+    console.error("Mongo connect error:", error);
+    throw error; // <-- important in serverless
   }
 };
+
 export default connectDB;
