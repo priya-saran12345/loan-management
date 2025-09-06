@@ -1,10 +1,6 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm ci --include=dev --prefix frontend",
-  "buildCommand": "npm run build --prefix frontend",
-  "outputDirectory": "frontend/dist",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/api/(.*)", "destination": "https://loan-management-backend.vercel.app/" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
