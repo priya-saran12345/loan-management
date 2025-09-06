@@ -1,8 +1,7 @@
 // api/index.js
 import app, { ensureDB } from "../backend/app.js";
 
-// Serverless env में हैंडलर लोड होने पर DB तैयार कर लें
+// ❗ Serverless में हैंडलर लोड होते ही DB connect
 await ensureDB();
 
-// Express app खुद request handler है
 export default app;
